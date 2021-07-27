@@ -1,7 +1,8 @@
-package superky.keytwo.mykotlinapp
+package superky.keytwo.mykotlinapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import superky.keytwo.mykotlinapp.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
