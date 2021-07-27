@@ -17,7 +17,10 @@ class MainFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
     var _binding: MainFragmentBinding? = null
-
+    val binding
+    get(): MainFragmentBinding{
+        return _binding!!
+    }
 
 
     companion object {
@@ -38,7 +41,7 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java) //потому что он на джава
-        val observer = Observer<Any>{ Toast.makeText(context, "Worked", Toast.LENGTH_LONG).show() }
+        val observer = Observer<Any> { Toast.makeText(context, "Worked", Toast.LENGTH_LONG).show() }
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
         viewModel.getDataFromLocalSource()
 
