@@ -59,7 +59,7 @@ class MainFragment : Fragment() {
         when (appState){
             is AppState.Succes -> {
                 binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.mainView,"Succes", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(binding.mainView,"Загружено", Snackbar.LENGTH_LONG).show()
                 setData(appState)
             }
             is AppState.Error -> TODO() //вывести ошибку
