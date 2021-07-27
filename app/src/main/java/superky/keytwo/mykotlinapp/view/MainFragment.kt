@@ -48,6 +48,7 @@ class MainFragment : Fragment() {
         val observer = Observer<Any> { Toast.makeText(context, "Worked", Toast.LENGTH_LONG).show() }
         viewModel.getLiveData().observe(viewLifecycleOwner, observer)
         viewModel.getDataFromLocalSource()
+        //binding.test.text = "TEXT" //Можно так
 
     }
 
