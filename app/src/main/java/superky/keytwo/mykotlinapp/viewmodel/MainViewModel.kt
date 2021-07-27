@@ -1,8 +1,9 @@
 package superky.keytwo.mykotlinapp.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class MainViewModel(val liveData: MutableLiveData<Any> = MutableLiveData()) : ViewModel() {
-
+class MainViewModel(private val liveDataObserver: MutableLiveData<Any> = MutableLiveData()) : ViewModel() {
+    fun getLiveData()= liveDataObserver
 }
