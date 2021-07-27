@@ -1,6 +1,6 @@
 package superky.keytwo.mykotlinapp.view
 
-class Weather(val city: City = getDefaultCity(), val temperature: Int, val feelsLike: Int)
+class Weather(val city: City = getDefaultCity(), val temperature: Int = 1, val feelsLike: Int = 0)
 
 fun getDefaultCity() = City("Moscow", 55.75, 53.37)
 
