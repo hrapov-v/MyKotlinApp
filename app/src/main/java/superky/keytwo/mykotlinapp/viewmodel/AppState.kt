@@ -1,6 +1,6 @@
 package superky.keytwo.mykotlinapp.viewmodel
 
-import superky.keytwo.mykotlinapp.view.Weather
+import superky.keytwo.mykotlinapp.model.Weather
 
 sealed class AppState {
     data class Succes(val dataWeather: Weather): AppState()

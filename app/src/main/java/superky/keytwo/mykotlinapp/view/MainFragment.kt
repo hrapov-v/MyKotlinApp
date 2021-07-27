@@ -61,6 +61,10 @@ class MainFragment : Fragment() {
                 val weatherData = appState.dataWeather
                 binding.loadingLayout.visibility = View.GONE
                 Snackbar.make(binding.mainView,"Succes", Snackbar.LENGTH_LONG).show()
+                binding.cityCoordinates.text = "${appState.dataWeather.city.lat} ${appState.dataWeather.city.long}"
+                binding.cityName
+                binding.feelsLikeValue
+                binding.temperatureValue
             }
             is AppState.Error -> TODO() //вывести ошибку
             AppState.Loading -> {
