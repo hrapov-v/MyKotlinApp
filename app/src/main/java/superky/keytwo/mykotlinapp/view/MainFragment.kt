@@ -9,13 +9,16 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.MainFragmentBinding
+import superky.keytwo.mykotlinapp.viewmodel.AppState
 import superky.keytwo.mykotlinapp.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
+
     //Возможно работает без костыля
     var _binding: MainFragmentBinding? = null
     val binding: MainFragmentBinding
@@ -45,11 +48,25 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java) //потому что он на джава
-        val observer = Observer<Any> { Toast.makeText(context, "Worked", Toast.LENGTH_LONG).show() }
-        viewModel.getLiveData().observe(viewLifecycleOwner, observer)
-        viewModel.getDataFromLocalSource()
+        //Было для теста//val observer = Observer<Any> { Toast.makeText(context, "Worked", Toast.LENGTH_LONG).show() }
+        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
+        viewModel.getWeather()
         //binding.test.text = "TEXT" //Можно так
 
+    }
+
+    private fun renderData(appState: AppState) {
+        when (appState){
+            is AppState.Succes -> {
+                val weatherData = appState.dataWeather
+                binding.loadingLayout.visibility = View.GONE
+                Snackbar.make(binding.mainView,"Succes", Snackbar.LENGTH_LONG).show()
+            }
+            is AppState.Error -> TODO() //вывести ошибку
+            AppState.Loading -> {
+                binding.loadingLayout.visibility = View.VISIBLE
+            }
+        }
     }
 
 }
