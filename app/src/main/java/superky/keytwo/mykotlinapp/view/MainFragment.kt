@@ -17,10 +17,10 @@ class MainFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
     var _binding: MainFragmentBinding? = null
-    val binding
-    get(): MainFragmentBinding{
-        return _binding!!
-    }
+    val binding: MainFragmentBinding
+        get(): MainFragmentBinding {
+            return _binding!!
+        }
 
 
     companion object {
@@ -32,10 +32,13 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.main_fragment, container, false)
+        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        return binding.root
+        //Старая запись
+        /*val view = inflater.inflate(R.layout.main_fragment, container, false)
         val textView: TextView? = view.findViewById(R.id.test)
 
-        return view
+        return view*/
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
