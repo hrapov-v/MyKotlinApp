@@ -16,6 +16,7 @@ import superky.keytwo.mykotlinapp.viewmodel.MainViewModel
 class MainFragment : Fragment() {
 
     lateinit var viewModel: MainViewModel
+    //Возможно работает без костыля
     var _binding: MainFragmentBinding? = null
     val binding: MainFragmentBinding
         get(): MainFragmentBinding {
