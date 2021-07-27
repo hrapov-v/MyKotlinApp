@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.viewmodel.MainViewModel
 
@@ -26,6 +28,10 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        val observer = Observer<Any>{}
+        viewModel.getLiveData().observe(viewLifecycleOwner, observer)
+
     }
 
 }
