@@ -58,19 +58,23 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState) {
         when (appState){
             is AppState.Succes -> {
-                val weatherData = appState.dataWeather
                 binding.loadingLayout.visibility = View.GONE
                 Snackbar.make(binding.mainView,"Succes", Snackbar.LENGTH_LONG).show()
-                binding.cityCoordinates.text = "${appState.dataWeather.city.lat} ${appState.dataWeather.city.long}"
-                binding.cityName
-                binding.feelsLikeValue
-                binding.temperatureValue
+                setData(appState)
             }
             is AppState.Error -> TODO() //вывести ошибку
             AppState.Loading -> {
                 binding.loadingLayout.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun setData(appState: AppState.Succes) {
+        binding.cityCoordinates.text =
+            "${appState.dataWeather.city.lat} ${appState.dataWeather.city.long}"
+        binding.cityName.text = appState.dataWeather.city.city
+        binding.feelsLikeValue.text = appState.dataWeather.feelsLike.toString()
+        binding.temperatureValue.text = appState.dataWeather.temperature.toString()
     }
 
 }
