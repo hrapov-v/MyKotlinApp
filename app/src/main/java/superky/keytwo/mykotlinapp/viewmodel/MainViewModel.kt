@@ -12,6 +12,6 @@ class MainViewModel(private val liveDataObserver: MutableLiveData<Any> = Mutable
         Thread{
             sleep(1000)
             liveDataObserver.postValue(Any())
-        }
+        }.start()
     }
 }
