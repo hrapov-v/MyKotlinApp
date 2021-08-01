@@ -5,7 +5,6 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentTransaction
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.ActivityMainBinding
-import superky.keytwo.mykotlinapp.databinding.MainFragmentBinding
 
 class MainActivity : AppCompatActivity() {
 
