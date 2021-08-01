@@ -39,10 +39,11 @@ class MainFragmentAdapter constructor(var onItemViewClickListener: OnItemViewCli
         return weatherData.size
     }
 
-    class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun init(weather: Weather) {
             itemView.findViewById<TextView>(R.id.mainFragmentRecyclerItemTextView).text =
                 weather.city.city
+            itemView.setOnClickListener{onItemViewClickListener?.onItemViewClick(weather)}
         }
     }
 }

@@ -9,14 +9,28 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.FragmentMainBinding
+import superky.keytwo.mykotlinapp.model.Weather
 import superky.keytwo.mykotlinapp.viewmodel.AppState
 import superky.keytwo.mykotlinapp.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 
-    val mainFragmentAdapter: MainFragmentAdapter = MainFragmentAdapter()
+    val mainFragmentAdapter: MainFragmentAdapter =
+        MainFragmentAdapter(object : OnItemViewClickListener {
+            override fun onItemViewClick(weather: Weather) {
+                val manager = activity?.supportFragmentManager
+                if (manager != null){
+
+                    val bundle= Bundle()
+                    bundle.putParcelable(DetailsFragment.KEY_WEATHER, weather)
+                    manager.beginTransaction().replace(R.id.container, DetailsFragment.newInstance(bundle)).
+                    addToBackStack(null).commit()
+                }
+            }
+        })
 
     lateinit var viewModel: MainViewModel
+
     //Как выяснилось без костыля не работает потому что есть onDestroy()
     var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
