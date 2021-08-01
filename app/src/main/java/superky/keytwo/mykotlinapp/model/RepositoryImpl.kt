@@ -5,8 +5,12 @@ class RepositoryImpl: Repository {
         return Weather()
     }
 
-    override fun getWeatherFromLocal(): Weather {
-        return Weather()
+    override fun getWeatherFromLocalRussian(): List<Weather> {
+        return getRussianCities()
+    }
+
+    override fun getWeatherFromLocalWorld(): List<Weather> {
+        return getWorldCities()
     }
 
 
