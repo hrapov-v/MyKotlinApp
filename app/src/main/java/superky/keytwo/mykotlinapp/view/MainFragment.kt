@@ -46,6 +46,7 @@ class MainFragment : Fragment() {
     }
 
 
+    //Вот тут точно кроется ошибка какая то как мне кажется
     companion object {
         fun newInstance() = MainFragment()
     }
