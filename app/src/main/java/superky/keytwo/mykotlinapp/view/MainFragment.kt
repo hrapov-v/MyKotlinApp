@@ -11,18 +11,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import superky.keytwo.mykotlinapp.R
+import superky.keytwo.mykotlinapp.databinding.FragmentMainBinding
 import superky.keytwo.mykotlinapp.databinding.MainFragmentBinding
 import superky.keytwo.mykotlinapp.viewmodel.AppState
 import superky.keytwo.mykotlinapp.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 
+    val mainFragmentAdapter: MainFragmentAdapter = MainFragmentAdapter()
+
     lateinit var viewModel: MainViewModel
 
     //Возможно работает без костыля
-    var _binding: MainFragmentBinding? = null
-    val binding: MainFragmentBinding
-        get(): MainFragmentBinding {
+    var _binding: FragmentMainBinding? = null
+    val binding: FragmentMainBinding
+        get(): FragmentMainBinding {
             return _binding!!
         }
 
@@ -41,7 +44,7 @@ class MainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = MainFragmentBinding.inflate(inflater, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
         return binding.root
         //Старая запись
         /*val view = inflater.inflate(R.layout.main_fragment, container, false)
@@ -50,36 +53,57 @@ class MainFragment : Fragment() {
         return view*/
     }
 
+    var isRussian: Boolean = true
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        binding.mainFragmentFAB.setOnClickListener {
+            initListenner()
+        }
+
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java) //потому что он на джава
         //Было для теста//val observer = Observer<Any> { Toast.makeText(context, "Worked", Toast.LENGTH_LONG).show() }
         viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
-        viewModel.getWeatherFromLocalSourceRussian()
         //binding.test.text = "TEXT" //Можно так
+        viewModel.getWeatherFromLocalSourceRussian()
+        binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+        isRussian = true
+    }
 
+    private fun initListenner() {
+        if (isRussian) {
+            viewModel.getWeatherFromLocalSourceWorld()
+            binding.mainFragmentFAB.setImageResource(R.drawable.ic_earth)
+        } else {
+            viewModel.getWeatherFromLocalSourceRussian()
+            binding.mainFragmentFAB.setImageResource(R.drawable.ic_russia)
+        }
+        isRussian = !isRussian
     }
 
     private fun renderData(appState: AppState) {
-        when (appState){
+        when (appState) {
             is AppState.Succes -> {
-                binding.loadingLayout.visibility = View.GONE
-                Snackbar.make(binding.mainView,"Загружено", Snackbar.LENGTH_LONG).show()
-                setData(appState)
+                binding.mainFragmentLoadingLayout.visibility = View.GONE
+                binding.mainFragmentRecyclerView.adapter = mainFragmentAdapter
+                mainFragmentAdapter.setWeather(appState.dataWeather)
+                /*Snackbar.make(binding.mainView, "Загружено", Snackbar.LENGTH_LONG).show()
+                setData(appState)*/
             }
             is AppState.Error -> TODO() //вывести ошибку
             AppState.Loading -> {
-                binding.loadingLayout.visibility = View.VISIBLE
+                binding.mainFragmentLoadingLayout.visibility = View.VISIBLE
             }
         }
     }
 
-    private fun setData(appState: AppState.Succes) {
+    //Пока ненужно
+    /*private fun setData(appState: AppState.Succes) {
         binding.cityCoordinates.text =
             "${appState.dataWeather.city.lat} ${appState.dataWeather.city.long}"
         binding.cityName.text = appState.dataWeather.city.city
         binding.feelsLikeValue.text = appState.dataWeather.feelsLike.toString()
         binding.temperatureValue.text = appState.dataWeather.temperature.toString()
-    }
+    }*/
 
 }

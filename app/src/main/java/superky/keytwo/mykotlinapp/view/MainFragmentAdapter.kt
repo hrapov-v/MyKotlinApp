@@ -10,13 +10,13 @@ import superky.keytwo.mykotlinapp.model.Weather
 
 class MainFragmentAdapter : RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
 
-    fun setWeather(list : List<Weather>) {
+    //private var weatherData: List<Weather> = listOf()
+    private lateinit var weatherData: List<Weather>
+
+    fun setWeather(list: List<Weather>) {
         weatherData = list
         notifyDataSetChanged()
     }
-
-    //private var weatherData: List<Weather> = listOf()
-    private lateinit var weatherData: List<Weather>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val view =
