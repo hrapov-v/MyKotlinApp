@@ -55,7 +55,7 @@ class MainFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java) //потому что он на джава
         //Было для теста//val observer = Observer<Any> { Toast.makeText(context, "Worked", Toast.LENGTH_LONG).show() }
         viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
-        viewModel.getWeather()
+        viewModel.getWeatherFromLocalSourceRussian()
         //binding.test.text = "TEXT" //Можно так
 
     }
