@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.model.Weather
 
-class MainFragmentAdapter : RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
+class MainFragmentAdapter constructor(var onItemViewClickListener: OnItemViewClickListener?) :
+    RecyclerView.Adapter<MainFragmentAdapter.MainViewHolder>() {
 
     //private var weatherData: List<Weather> = listOf()
     private lateinit var weatherData: List<Weather>
@@ -16,6 +17,10 @@ class MainFragmentAdapter : RecyclerView.Adapter<MainFragmentAdapter.MainViewHol
     fun setWeather(list: List<Weather>) {
         weatherData = list
         notifyDataSetChanged()
+    }
+
+    fun removeListener(){
+        onItemViewClickListener = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {

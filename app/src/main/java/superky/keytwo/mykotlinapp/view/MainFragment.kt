@@ -4,15 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.FragmentMainBinding
-import superky.keytwo.mykotlinapp.databinding.MainFragmentBinding
 import superky.keytwo.mykotlinapp.viewmodel.AppState
 import superky.keytwo.mykotlinapp.viewmodel.MainViewModel
 
@@ -21,8 +17,7 @@ class MainFragment : Fragment() {
     val mainFragmentAdapter: MainFragmentAdapter = MainFragmentAdapter()
 
     lateinit var viewModel: MainViewModel
-
-    //Возможно работает без костыля
+    //Как выяснилось без костыля не работает потому что есть onDestroy()
     var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
         get(): FragmentMainBinding {
@@ -32,6 +27,7 @@ class MainFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        mainFragmentAdapter.removeListener()
     }
 
 

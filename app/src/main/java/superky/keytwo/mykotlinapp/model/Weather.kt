@@ -1,11 +1,21 @@
 package superky.keytwo.mykotlinapp.model
 
-data class Weather(val city: City = getDefaultCity(), val temperature: Int = 1, val feelsLike: Int = 0)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class Weather(
+    val city: City = getDefaultCity(),
+    val temperature: Int = 1,
+    val feelsLike: Int = 0
+) : Parcelable
+
+@Parcelize
+data class City(val city: String, val lat: Double, val long: Double) : Parcelable
 
 fun getDefaultCity() =
     City("Moscow", 55.75, 53.37)
 
-data class City(val city: String, val lat: Double, val long: Double)
 
 fun getWorldCities(): List<Weather> {
     return listOf(
