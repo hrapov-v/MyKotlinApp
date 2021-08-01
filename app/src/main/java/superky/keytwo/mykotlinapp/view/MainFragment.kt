@@ -97,13 +97,4 @@ class MainFragment : Fragment() {
         }
     }
 
-    //Пока ненужно
-    /*private fun setData(appState: AppState.Succes) {
-        binding.cityCoordinates.text =
-            "${appState.dataWeather.city.lat} ${appState.dataWeather.city.long}"
-        binding.cityName.text = appState.dataWeather.city.city
-        binding.feelsLikeValue.text = appState.dataWeather.feelsLike.toString()
-        binding.temperatureValue.text = appState.dataWeather.temperature.toString()
-    }*/
-
 }
