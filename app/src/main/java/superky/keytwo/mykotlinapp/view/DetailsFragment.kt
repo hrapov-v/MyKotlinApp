@@ -47,7 +47,15 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setData(weather: Weather) {
-        with(binding) {
+        /*with(binding) {
+            cityCoordinates.text =
+                "${weather.city.lat} ${weather.city.long}"
+            cityName.text = weather.city.city
+            feelsLikeValue.text = weather.feelsLike.toString()
+            temperatureValue.text = weather.temperature.toString()
+        }*/
+
+        binding.apply {
             cityCoordinates.text =
                 "${weather.city.lat} ${weather.city.long}"
             cityName.text = weather.city.city
