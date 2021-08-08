@@ -104,6 +104,7 @@ class MainFragment : Fragment() {
                 binding.mainFragmentLoadingLayout.visibility = View.GONE
                 binding.mainFragmentRecyclerView.adapter = mainFragmentAdapter
                 mainFragmentAdapter.setWeather(appState.dataWeather)
+                //Разобраться
                 //Snackbar.make(binding.root, "Загружено", Snackbar.LENGTH_LONG).show()
                 //binding.root.snackRelize(R.string.app_name, Snackbar.LENGTH_LONG)
                 /*setData(appState)*/
