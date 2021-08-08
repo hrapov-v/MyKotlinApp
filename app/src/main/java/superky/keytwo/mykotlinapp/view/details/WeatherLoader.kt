@@ -7,10 +7,10 @@ import java.net.URL
 class WeatherLoader(
     private val listener: WeatherLoaderListener,
     private val lat: Double,
-    private val long: Double
+    private val lon: Double
 ) {
     fun loadWeather() {
-        val url = URL(YANDEX_API_URL)
+        val url = URL("${YANDEX_API_URL}?lat= ${lat}& ")
     }
 }
 

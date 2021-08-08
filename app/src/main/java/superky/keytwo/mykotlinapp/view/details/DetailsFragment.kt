@@ -45,7 +45,7 @@ class DetailsFragment : Fragment() {
         arguments?.getParcelable<Weather>(KEY_WEATHER)?.apply {
             with(binding) {
                 cityCoordinates.text =
-                    "${city.lat} ${city.long}"
+                    "${city.lat} ${city.lon}"
                 cityName.text = city.name
                 feelsLikeValue.text = feelsLike.toString()
                 temperatureValue.text = temperature.toString()
