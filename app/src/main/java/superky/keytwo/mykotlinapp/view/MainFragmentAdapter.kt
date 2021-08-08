@@ -19,7 +19,7 @@ class MainFragmentAdapter constructor(var onItemViewClickListener: OnItemViewCli
         notifyDataSetChanged()
     }
 
-    fun removeListener(){
+    fun removeListener() {
         onItemViewClickListener = null
     }
 
@@ -41,9 +41,11 @@ class MainFragmentAdapter constructor(var onItemViewClickListener: OnItemViewCli
 
     inner class MainViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun init(weather: Weather) {
-            itemView.findViewById<TextView>(R.id.mainFragmentRecyclerItemTextView).text =
-                weather.city.name
-            itemView.setOnClickListener{onItemViewClickListener?.onItemViewClick(weather)}
+            with(itemView) {
+                findViewById<TextView>(R.id.mainFragmentRecyclerItemTextView).text =
+                    weather.city.name
+                setOnClickListener { onItemViewClickListener?.onItemViewClick(weather) }
+            }
         }
     }
 }
