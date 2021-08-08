@@ -30,8 +30,10 @@ class MainFragment : Fragment() {
             }
         })
 
-    lateinit var viewModel: MainViewModel
-
+    //lateinit var viewModel: MainViewModel
+    val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
     //Как выяснилось без костыля не работает потому что есть onDestroy()
     var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
@@ -72,7 +74,7 @@ class MainFragment : Fragment() {
             initListenner()
         }
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java) //потому что он на джава
+        //viewModel = ViewModelProvider(this).get(MainViewModel::class.java) //потому что он на джава
         //Было для теста//val observer = Observer<Any> { Toast.makeText(context, "Worked", Toast.LENGTH_LONG).show() }
         viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
         //binding.test.text = "TEXT" //Можно так
