@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.FragmentMainBinding
 import superky.keytwo.mykotlinapp.model.Weather
@@ -20,12 +21,10 @@ class MainFragment : Fragment() {
             override fun onItemViewClick(weather: Weather) {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction().replace(
-                        R.id.container,
-                        DetailsFragment.newInstance(Bundle().apply {
+                        R.id.container, DetailsFragment.newInstance(Bundle().apply {
                             putParcelable(DetailsFragment.KEY_WEATHER, weather)
                         })
-                    ).addToBackStack("")
-                        .commitAllowingStateLoss()
+                    ).addToBackStack("").commitAllowingStateLoss()
                 }
             }
         })
@@ -95,14 +94,19 @@ class MainFragment : Fragment() {
         isRussian = !isRussian
     }
 
+    fun View.snackRelize(resourceID: Int, duration: Int) {
+        Snackbar.make(this, requireActivity().resources.getString(resourceID), duration).show()
+    }
+
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Succes -> {
                 binding.mainFragmentLoadingLayout.visibility = View.GONE
                 binding.mainFragmentRecyclerView.adapter = mainFragmentAdapter
                 mainFragmentAdapter.setWeather(appState.dataWeather)
-                /*Snackbar.make(binding.mainView, "Загружено", Snackbar.LENGTH_LONG).show()
-                setData(appState)*/
+                //Snackbar.make(binding.root, "Загружено", Snackbar.LENGTH_LONG).show()
+                //binding.root.snackRelize(R.string.app_name, Snackbar.LENGTH_LONG)
+                /*setData(appState)*/
             }
             is AppState.Error -> TODO() //вывести ошибку
             AppState.Loading -> {
