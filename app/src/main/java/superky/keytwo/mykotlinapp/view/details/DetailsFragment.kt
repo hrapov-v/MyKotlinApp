@@ -53,6 +53,7 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
         }
     }
 
+    //s
     override fun onFailed(throwable: Throwable) {
         Toast.makeText(context, throwable.localizedMessage, Toast.LENGTH_LONG).show()
     }
