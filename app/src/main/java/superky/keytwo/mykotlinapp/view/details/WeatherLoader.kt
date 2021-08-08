@@ -32,7 +32,7 @@ class WeatherLoader(
             } catch (e: Exception) {
                 listener.onFailed(e)
             }
-        }
+        }.start()
     }
 }
 
