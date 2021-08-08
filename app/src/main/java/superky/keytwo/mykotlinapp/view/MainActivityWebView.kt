@@ -6,8 +6,11 @@ import android.view.View
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.ActivityMainBinding
 import superky.keytwo.mykotlinapp.databinding.MainActivityWebviewBinding
+import java.io.BufferedReader
+import java.io.InputStreamReader
 import java.lang.Exception
 import java.net.URL
+import java.util.stream.Collectors
 import javax.net.ssl.HttpsURLConnection
 
 class MainActivityWebView : AppCompatActivity() {
@@ -28,7 +31,8 @@ class MainActivityWebView : AppCompatActivity() {
                 httpsURLConnection.requestMethod = "GET"
                 httpsURLConnection.connectTimeout = 5000
 
-
+                var reader = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
+                val result = reader.lines().collect(Collectors.joining("\n"))
             } catch (e: Exception) {
 
             }
