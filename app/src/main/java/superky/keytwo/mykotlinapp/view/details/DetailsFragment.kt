@@ -62,7 +62,6 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
         arguments?.getParcelable<Weather>(KEY_WEATHER)?.apply {
             weatherLocal = this
             WeatherLoader(this@DetailsFragment, city.lat, city.lon).loadWeather()
-
         }
         /*arguments?.getParcelable<Weather>(KEY_WEATHER)?.apply {
             with(binding) {
