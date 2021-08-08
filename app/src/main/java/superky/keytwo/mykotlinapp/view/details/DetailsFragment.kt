@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import superky.keytwo.mykotlinapp.databinding.FragmentDetailsBinding
 import superky.keytwo.mykotlinapp.model.Weather
+import superky.keytwo.mykotlinapp.model.WeatherDTO
 
-class DetailsFragment : Fragment() {
+class DetailsFragment : Fragment(), WeatherLoaderListener {
 
     companion object {
         val KEY_WEATHER: String = "key"
@@ -40,9 +41,30 @@ class DetailsFragment : Fragment() {
         _binding = null
     }
 
+    override fun onLoaded(weatherDTO: WeatherDTO) {
+        with(binding) {
+            cityCoordinates.text = "${weatherLocal.city.lat} ${weatherLocal.city.lon}"
+            cityName.text = weatherLocal.city.name
+            feelsLikeValue.text = "${weatherDTO.fact.feels_like}"
+            temperatureValue.text = "${weatherDTO.fact.temp}"
+            condition.text = "${weatherDTO.fact.condition}"
+        }
+    }
+
+    override fun onFailed(throwable: Throwable) {
+
+    }
+
+    lateinit var weatherLocal: Weather
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         arguments?.getParcelable<Weather>(KEY_WEATHER)?.apply {
+            weatherLocal = this
+            WeatherLoader(this@DetailsFragment, city.lat, city.lon).loadWeather()
+
+        }
+        /*arguments?.getParcelable<Weather>(KEY_WEATHER)?.apply {
             with(binding) {
                 cityCoordinates.text =
                     "${city.lat} ${city.lon}"
@@ -50,7 +72,7 @@ class DetailsFragment : Fragment() {
                 feelsLikeValue.text = feelsLike.toString()
                 temperatureValue.text = temperature.toString()
             }
-        }
+        }*/
     }
 
     /*private fun setData(weather: Weather) {
@@ -61,11 +83,11 @@ class DetailsFragment : Fragment() {
             }
         }*/
 
-        /*binding.apply {
-            cityCoordinates.text =
-                "${weather.city.lat} ${weather.city.long}"
-            cityName.text = weather.city.city
-            feelsLikeValue.text = weather.feelsLike.toString()
-            temperatureValue.text = weather.temperature.toString()
-        }*/
-    }
+    /*binding.apply {
+        cityCoordinates.text =
+            "${weather.city.lat} ${weather.city.long}"
+        cityName.text = weather.city.city
+        feelsLikeValue.text = weather.feelsLike.toString()
+        temperatureValue.text = weather.temperature.toString()
+    }*/
+}
