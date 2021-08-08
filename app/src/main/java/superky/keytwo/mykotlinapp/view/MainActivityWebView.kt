@@ -2,6 +2,7 @@ package superky.keytwo.mykotlinapp.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.ActivityMainBinding
@@ -24,18 +25,22 @@ class MainActivityWebView : AppCompatActivity() {
 
     var clickListener: View.OnClickListener = object : View.OnClickListener {
         override fun onClick(v: View?) {
-            var httpsURLConnection: HttpsURLConnection? = null
-            try {
-                val url = URL(binding.url.text.toString())
-                httpsURLConnection = url.openConnection() as HttpsURLConnection
-                httpsURLConnection.requestMethod = "GET"
-                httpsURLConnection.connectTimeout = 5000
 
-                var reader = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
-                val result = reader.lines().collect(Collectors.joining("\n"))
-            } catch (e: Exception) {
+            Thread {
+                var httpsURLConnection: HttpsURLConnection? = null
+                try {
+                    val url = URL(binding.url.text.toString())
+                    httpsURLConnection = url.openConnection() as HttpsURLConnection
+                    httpsURLConnection.requestMethod = "GET"
+                    httpsURLConnection.connectTimeout = 5000
 
-            }
+                    var reader = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
+                    val result = reader.lines().collect(Collectors.joining("\n"))
+                } catch (e: Exception) {
+                    Log.d("myLog", e.toString())
+                    Log.d("myLog", e.localizedMessage)
+                }
+            }.start()
         }
     }
 
