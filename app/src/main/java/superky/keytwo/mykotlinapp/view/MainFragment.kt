@@ -18,14 +18,14 @@ class MainFragment : Fragment() {
     val mainFragmentAdapter: MainFragmentAdapter =
         MainFragmentAdapter(object : OnItemViewClickListener {
             override fun onItemViewClick(weather: Weather) {
-                val manager = activity?.supportFragmentManager
-                if (manager != null){
-
-                    val bundle= Bundle()
-                    bundle.putParcelable(DetailsFragment.KEY_WEATHER, weather)
-                    //Вот здесь в методичке add
-                    manager.beginTransaction().replace(R.id.container, DetailsFragment.newInstance(bundle)).
-                    addToBackStack("").commitAllowingStateLoss()
+                activity?.supportFragmentManager?.apply {
+                    beginTransaction().replace(
+                        R.id.container,
+                        DetailsFragment.newInstance(Bundle().apply {
+                            putParcelable(DetailsFragment.KEY_WEATHER, weather)
+                        })
+                    ).addToBackStack("")
+                        .commitAllowingStateLoss()
                 }
             }
         })
@@ -34,6 +34,7 @@ class MainFragment : Fragment() {
     val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
+
     //Как выяснилось без костыля не работает потому что есть onDestroy()
     var _binding: FragmentMainBinding? = null
     val binding: FragmentMainBinding
@@ -47,7 +48,7 @@ class MainFragment : Fragment() {
         mainFragmentAdapter.removeListener()
     }
 
-    
+
     companion object {
         fun newInstance() = MainFragment()
     }
