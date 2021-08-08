@@ -34,6 +34,16 @@
             tools:text="lt/ln: 55.755826, 37.617299900000035" />
 
         <TextView
+            android:id="@+id/condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:textSize="@dimen/textSzCondition"
+            app:layout_constraintTop_toBottomOf="@+id/cityCoordinates" />
+
+        <TextView
             android:id="@+id/temperatureLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,7 +52,7 @@
             android:textSize="@dimen/labelSz"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cityCoordinates" />
+            app:layout_constraintTop_toBottomOf="@+id/condition" />
 
         <TextView
             android:id="@+id/temperatureValue"
