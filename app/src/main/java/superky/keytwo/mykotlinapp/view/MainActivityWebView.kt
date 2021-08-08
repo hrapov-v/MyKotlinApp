@@ -7,6 +7,7 @@ import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.ActivityMainBinding
 import superky.keytwo.mykotlinapp.databinding.MainActivityWebviewBinding
 import java.lang.Exception
+import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
 class MainActivityWebView : AppCompatActivity() {
@@ -22,8 +23,13 @@ class MainActivityWebView : AppCompatActivity() {
         override fun onClick(v: View?) {
             var httpsURLConnection: HttpsURLConnection? = null
             try {
-             val url = binding.url.text.toString()
-            }catch (e: Exception){
+                val url = URL(binding.url.text.toString())
+                httpsURLConnection = url.openConnection() as HttpsURLConnection
+                httpsURLConnection.requestMethod = "GET"
+                httpsURLConnection.connectTimeout = 5000
+
+
+            } catch (e: Exception) {
 
             }
         }
