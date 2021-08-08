@@ -37,7 +37,8 @@ class MainActivityWebView : AppCompatActivity() {
                     var reader = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
                     val result = reader.lines().collect(Collectors.joining("\n"))
                     runOnUiThread {
-                        binding.webView.loadData(result, "text/html; charset = utf-8", "utf-8")
+                        binding.webView.loadDataWithBaseURL(null, result, "text/html; charset = utf-8",
+                            "utf-8", null)
                     }
                 } catch (e: Exception) {
                     Log.d("myLog", e.toString())
