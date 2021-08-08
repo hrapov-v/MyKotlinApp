@@ -30,7 +30,7 @@ class MainFragment : Fragment() {
             }
         })
 
-    //lateinit var viewModel: MainViewModel
+    //lateinit var viewModel: MainViewModel //старая реализация
     val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
