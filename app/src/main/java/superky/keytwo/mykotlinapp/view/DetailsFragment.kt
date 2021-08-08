@@ -68,4 +68,3 @@ class DetailsFragment : Fragment() {
             temperatureValue.text = weather.temperature.toString()
         }*/
     }
-}
