@@ -51,7 +51,7 @@ class DetailsFragment : Fragment() {
             with(weather) {
                 cityCoordinates.text =
                     "${city.lat} ${city.long}"
-                cityName.text = city.city
+                cityName.text = city.name
                 feelsLikeValue.text = feelsLike.toString()
                 temperatureValue.text = temperature.toString()
             }
