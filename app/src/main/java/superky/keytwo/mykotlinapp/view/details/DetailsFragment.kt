@@ -1,4 +1,4 @@
-package superky.keytwo.mykotlinapp.view
+package superky.keytwo.mykotlinapp.view.details
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,7 +13,8 @@ class DetailsFragment : Fragment() {
     companion object {
         val KEY_WEATHER: String = "key"
         fun newInstance(bundle: Bundle): DetailsFragment {
-            val fragment = DetailsFragment()
+            val fragment =
+                DetailsFragment()
             fragment.arguments = bundle
             return fragment
         }

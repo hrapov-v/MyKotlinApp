@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import superky.keytwo.mykotlinapp.R
 import superky.keytwo.mykotlinapp.databinding.FragmentMainBinding
 import superky.keytwo.mykotlinapp.model.Weather
+import superky.keytwo.mykotlinapp.view.details.DetailsFragment
 import superky.keytwo.mykotlinapp.viewmodel.AppState
 import superky.keytwo.mykotlinapp.viewmodel.MainViewModel
 
