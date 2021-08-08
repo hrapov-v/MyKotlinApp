@@ -41,18 +41,20 @@ class DetailsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val weather = arguments?.getParcelable(KEY_WEATHER) as? Weather
+        val weather: Weather? = arguments?.getParcelable(KEY_WEATHER)
         weather?.let { setData(weather) }
     }
 
     private fun setData(weather: Weather) {
         //рещили на уроке что with лучше потому что apply вернёт в пустоту копию
         with(binding) {
-            cityCoordinates.text =
-                "${weather.city.lat} ${weather.city.long}"
-            cityName.text = weather.city.city
-            feelsLikeValue.text = weather.feelsLike.toString()
-            temperatureValue.text = weather.temperature.toString()
+            with(weather) {
+                cityCoordinates.text =
+                    "${city.lat} ${city.long}"
+                cityName.text = city.city
+                feelsLikeValue.text = feelsLike.toString()
+                temperatureValue.text = temperature.toString()
+            }
         }
 
         /*binding.apply {
