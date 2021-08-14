@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import superky.keytwo.mykotlinapp.databinding.FragmentDetailsBinding
 import superky.keytwo.mykotlinapp.model.FactDTO
 import superky.keytwo.mykotlinapp.model.Weather
@@ -104,14 +105,18 @@ class DetailsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        context?.registerReceiver(loadResultReceiver, IntentFilter(DETAILS_INTENT_FILTER))
+        context?.let {
+            LocalBroadcastManager.getInstance(it).registerReceiver(
+                loadResultReceiver, IntentFilter(DETAILS_INTENT_FILTER)
+            )
+        }
     }
 
     fun getWeather() {
         binding.mainView.visibility = View.GONE
         binding.loadingLayout.visibility = View.VISIBLE
         weatherBundle?.let {
-            context.startService(Intent(context, DetailsService::class.java).apply {
+            context?.startService(Intent(context, DetailsService::class.java).apply {
                 putExtra(LATITUDE_EXTRA, it.city.lat)
                 putExtra(LONGITUDE_EXTRA, it.city.lon)
             })
