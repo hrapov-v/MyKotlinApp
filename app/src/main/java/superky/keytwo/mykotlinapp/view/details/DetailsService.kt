@@ -43,9 +43,8 @@ class DetailsService(name: String = "name") : IntentService(name) {
     }
 
     private fun loadWeather(lat: Double, lon: Double) {
-        val handler = Handler()
+        //val handler = Handler()
         Thread {
-
             try {
                 val url = URL("$YANDEX_API_URL?lat=${lat}&lon=${lon}")
                 val httpsURLConnection: HttpsURLConnection =
@@ -66,11 +65,10 @@ class DetailsService(name: String = "name") : IntentService(name) {
             } catch (e: Exception) {
                 //handler.post(Runnable { listener.onFailed(e) })
             }
-
         }.start()
     }
 
-    fun putLoadResult(result: String){
+    fun putLoadResult(result: String) {
         broadcastIntent.putExtra(DETAILS_LOAD_RESULT_EXTRA, result)
     }
 

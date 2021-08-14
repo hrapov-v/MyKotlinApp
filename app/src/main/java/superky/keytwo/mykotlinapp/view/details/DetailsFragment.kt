@@ -1,5 +1,6 @@
 package superky.keytwo.mykotlinapp.view.details
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -60,6 +61,18 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
         Toast.makeText(context, throwable.localizedMessage, Toast.LENGTH_LONG).show()
     }
 
+    val
+
+    fun getWeather(){
+        binding.mainView.visibility = View.GONE
+        binding.loadingLayout.visibility = View.VISIBLE
+        context?.let {
+            it.startService(Intent(it, DetailsService::class.java).apply {
+                putExtra(LATITUDE_EXTRA, )
+                putExtra(LONGITUDE_EXTRA, )
+            }
+        }
+    }
 
     lateinit var weatherLocal: Weather
 
