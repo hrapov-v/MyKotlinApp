@@ -12,6 +12,8 @@ import superky.keytwo.mykotlinapp.model.WeatherDTO
 
 class DetailsFragment : Fragment(), WeatherLoaderListener {
 
+    //здесь сейчас сама погода детали так сказать
+
     companion object {
         const val KEY_WEATHER: String = "key"
         fun newInstance(bundle: Bundle): DetailsFragment {

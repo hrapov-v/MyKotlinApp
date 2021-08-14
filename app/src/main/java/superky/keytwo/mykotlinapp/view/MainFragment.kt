@@ -17,6 +17,8 @@ import superky.keytwo.mykotlinapp.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 
+    //здесь сейчас список городов
+
     val mainFragmentAdapter: MainFragmentAdapter =
         MainFragmentAdapter(object : OnItemViewClickListener {
             override fun onItemViewClick(weather: Weather) {
