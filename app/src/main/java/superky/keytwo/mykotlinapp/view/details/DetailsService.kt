@@ -39,7 +39,10 @@ class DetailsService(name: String = "name") : IntentService(name) {
     private val broadcastIntent = Intent(DETAILS_INTENT_FILTER)
 
     override fun onHandleIntent(intent: Intent?) {
-
+        intent?.let {
+            loadWeather(it.getDoubleExtra(LATITUDE_EXTRA, -1.0),
+                it.getDoubleExtra(LONGITUDE_EXTRA, -1.0))
+        }
     }
 
     private fun loadWeather(lat: Double, lon: Double) {
