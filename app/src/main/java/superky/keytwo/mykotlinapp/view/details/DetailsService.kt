@@ -4,6 +4,7 @@ import android.app.IntentService
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Handler
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
 import superky.keytwo.mykotlinapp.model.WeatherDTO
 import superky.keytwo.mykotlinapp.model.YANDEX_API_KEY_NAME
@@ -55,9 +56,15 @@ class DetailsService(name: String = "name") : IntentService(name) {
                 //httpsURLConnection.addRequestProperty(YANDEX_API_KEY_NAME, BuildConfig.YANDEX_API_KEY_NAME)
                 val buffer = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
                 val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
-                handler.post(Runnable { listener.onLoaded(weatherDTO) })
+                val fact = weatherDTO.fact
+                putLoadResult(DETAILS_LOAD_RESULT_EXTRA)
+                broadcastIntent.putExtra(DETAILS_TEMP_EXTRA, fact.temp)
+                broadcastIntent.putExtra(DETAILS_FEELS_LIKE_EXTRA, fact.feels_like)
+                broadcastIntent.putExtra(DETAILS_CONDITION_EXTRA, fact.condition)
+                LocalBroadcastManager.getInstance(this).sendBroadcast(broadcastIntent)
+                //handler.post(Runnable { listener.onLoaded(weatherDTO) })
             } catch (e: Exception) {
-                handler.post(Runnable { listener.onFailed(e) })
+                //handler.post(Runnable { listener.onFailed(e) })
             }
 
         }.start()
