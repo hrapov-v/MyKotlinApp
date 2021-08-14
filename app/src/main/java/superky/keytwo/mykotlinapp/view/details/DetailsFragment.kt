@@ -3,12 +3,11 @@ package superky.keytwo.mykotlinapp.view.details
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import superky.keytwo.mykotlinapp.databinding.FragmentDetailsBinding
 import superky.keytwo.mykotlinapp.model.FactDTO
@@ -71,17 +70,42 @@ class DetailsFragment : Fragment() {
             intent?.let {
                 when (it.getStringExtra(DETAILS_LOAD_RESULT_EXTRA)) {
                     DETAILS_RESPONSE_SUCCESS_EXTRA ->
-                        WeatherDTO(FactDTO(it.getIntExtra(DETAILS_TEMP_EXTRA, -1),
-                            it.getIntExtra(DETAILS_FEELS_LIKE_EXTRA, -1),
-                            it.getStringExtra(DETAILS_CONDITION_EXTRA)!!))
+                        renderData(
+                            WeatherDTO(
+                                FactDTO(
+                                    it.getIntExtra(DETAILS_TEMP_EXTRA, -1),
+                                    it.getIntExtra(DETAILS_FEELS_LIKE_EXTRA, -1),
+                                    it.getStringExtra(DETAILS_CONDITION_EXTRA)!!
+                                )
+                            )
+                        )
                     else -> null
                 }
             }
         }
+    }
 
+    fun renderData(weather: WeatherDTO) {
+        binding.mainView.visibility = View.VISIBLE
+        binding.loadingLayout.visibility = View.GONE
+
+        weatherBundle?.let {
+            with(binding) {
+                cityCoordinates.text = "${it.city.lat} ${it.city.lon}"
+                cityName.text = it.city.name
+                feelsLikeValue.text = weather.fact.temp.toString()
+                temperatureValue.text = weather.fact.feels_like.toString()
+                condition.text = weather.fact.condition
+            }
+        }
     }
 
     var weatherBundle: Weather? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        context?.registerReceiver(loadResultReceiver, IntentFilter(DETAILS_INTENT_FILTER))
+    }
 
     fun getWeather() {
         binding.mainView.visibility = View.GONE
