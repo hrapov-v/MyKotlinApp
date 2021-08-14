@@ -56,7 +56,7 @@ class DetailsService(name: String = "name") : IntentService(name) {
                 val buffer = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
                 val weatherDTO: WeatherDTO = Gson().fromJson(buffer, WeatherDTO::class.java)
                 val fact = weatherDTO.fact
-                putLoadResult(DETAILS_LOAD_RESULT_EXTRA)
+                putLoadResult(DETAILS_RESPONSE_SUCCESS_EXTRA)
                 broadcastIntent.putExtra(DETAILS_TEMP_EXTRA, fact.temp)
                 broadcastIntent.putExtra(DETAILS_FEELS_LIKE_EXTRA, fact.feels_like)
                 broadcastIntent.putExtra(DETAILS_CONDITION_EXTRA, fact.condition)

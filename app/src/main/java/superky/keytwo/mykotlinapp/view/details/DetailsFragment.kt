@@ -1,17 +1,21 @@
 package superky.keytwo.mykotlinapp.view.details
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import superky.keytwo.mykotlinapp.databinding.FragmentDetailsBinding
+import superky.keytwo.mykotlinapp.model.FactDTO
 import superky.keytwo.mykotlinapp.model.Weather
 import superky.keytwo.mykotlinapp.model.WeatherDTO
 
-class DetailsFragment : Fragment(), WeatherLoaderListener {
+class DetailsFragment : Fragment() {
 
     //здесь сейчас сама погода детали так сказать
 
@@ -46,7 +50,7 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
     }
 
 
-    override fun onLoaded(weatherDTO: WeatherDTO) {
+    /*override fun onLoaded(weatherDTO: WeatherDTO) {
         with(binding) {
             cityCoordinates.text = "${weatherLocal.city.lat} ${weatherLocal.city.lon}"
             cityName.text = weatherLocal.city.name
@@ -59,18 +63,34 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
     //s
     override fun onFailed(throwable: Throwable) {
         Toast.makeText(context, throwable.localizedMessage, Toast.LENGTH_LONG).show()
+    }*/
+
+    private val loadResultReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+
+            intent?.let {
+                when (it.getStringExtra(DETAILS_LOAD_RESULT_EXTRA)) {
+                    DETAILS_RESPONSE_SUCCESS_EXTRA ->
+                        WeatherDTO(FactDTO(it.getIntExtra(DETAILS_TEMP_EXTRA, -1),
+                            it.getIntExtra(DETAILS_FEELS_LIKE_EXTRA, -1),
+                            it.getStringExtra(DETAILS_CONDITION_EXTRA)!!))
+                    else -> null
+                }
+            }
+        }
+
     }
 
-    val
+    var weatherBundle: Weather? = null
 
-    fun getWeather(){
+    fun getWeather() {
         binding.mainView.visibility = View.GONE
         binding.loadingLayout.visibility = View.VISIBLE
-        context?.let {
-            it.startService(Intent(it, DetailsService::class.java).apply {
-                putExtra(LATITUDE_EXTRA, )
-                putExtra(LONGITUDE_EXTRA, )
-            }
+        weatherBundle?.let {
+            context.startService(Intent(context, DetailsService::class.java).apply {
+                putExtra(LATITUDE_EXTRA, it.city.lat)
+                putExtra(LONGITUDE_EXTRA, it.city.lon)
+            })
         }
     }
 
@@ -79,8 +99,9 @@ class DetailsFragment : Fragment(), WeatherLoaderListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getParcelable<Weather>(KEY_WEATHER)?.apply {
-            weatherLocal = this
-            WeatherLoader(this@DetailsFragment, city.lat, city.lon).loadWeather()
+            weatherBundle = this
+            //WeatherLoader(this@DetailsFragment, city.lat, city.lon).loadWeather() //Устаревшее
+            getWeather()
         }
     }
 
