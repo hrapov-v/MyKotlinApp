@@ -123,8 +123,6 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    lateinit var weatherLocal: Weather
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.getParcelable<Weather>(KEY_WEATHER)?.apply {
@@ -133,5 +131,4 @@ class DetailsFragment : Fragment() {
             getWeather()
         }
     }
-
 }
